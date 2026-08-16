@@ -33,6 +33,8 @@ Two failure modes of LLM-driven research are structural, not fixable by "being c
 | `templates/` | Scaffolding laid into a project: ledger, task queue, done log, review, ideas, check_numbers.py, COLLAB_PROTOCOL |
 | `COLLAB_PROTOCOL_evolved.md` | The collaboration protocol **as battle-tested in a real project** (one measurement-paper campaign, 58 adversarial review rounds), including: evidence-required bug-fix reporting (grep/run evidence, no verbal "done"), structural-before-parametric fixes, per-step asserts in multi-step edits |
 | `scripts/` | `init.sh` (role bootstrap, transport autodetect), `collab.sh` (herdr peer discovery), `notify.sh`, `start.sh` |
+| `agents/novelty-screener.md` | First-pass novelty screen (abstract-level, produces a `<<<SCREEN_HANDOFF>>>` block with candidate closest-known-works for the reviewer to verify) |
+| `agents/novelty-reviewer.md` | **The adversarial novelty gate**: falsification-style review of any idea/hypothesis/claim mutation before it consumes GPU — mandatory live deep search (full-text PDF verification, never training memory), three search directions (domain / general-ML mechanism / fresh preprints), typed evidence anchors, 7 AI-research failure-mode self-checks, verdict NOVEL / PARTIALLY_NOVEL / INCREMENTAL / KNOWN |
 
 ## The collaboration loop
 

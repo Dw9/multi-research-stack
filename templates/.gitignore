@@ -1,0 +1,30 @@
+# 日志与临时产物
+logs/
+lightning_logs/
+wandb/
+runs/
+__pycache__/
+*.pyc
+*.ipynb_checkpoints/
+
+# 模型权重(大文件,不入 git)
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+*.onnx
+*.bin
+*.h5
+
+# 数据
+*.wav
+*.flac
+*.mp3
+data/
+datasets/
+
+# pi/autoresearch 产物(本地,不入 git)
+.pi-subagents/artifacts/
+.auto/
+# student 自报的 tmux pane id(机器本地临时信息)
+.pi-pane

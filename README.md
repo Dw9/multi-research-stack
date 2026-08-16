@@ -1,0 +1,53 @@
+# multi-research-stack
+
+An LLM-driven research collaboration stack: **pi (student/executor) + claude (teacher/mentor) +
+optional adversarial reviewer**, built around two planes:
+
+- **Data/state plane (files, not replaceable)** — `RESULTS_LEDGER.md` as the single source of
+  truth for every number, `NEXT_TASK.md` / `DONE_LOG.md` / `REVIEW*.md` for handoff and audit,
+  and `check_numbers.py` as a fail-closed traceability guard.
+- **Transport/control plane (replaceable)** — herdr or tmux; only one-line "please read X.md"
+  notifications ever cross it.
+
+## Why
+
+Two failure modes of LLM-driven research are structural, not fixable by "being careful":
+
+1. **Fabricated / misremembered numbers.** Countered mechanically: every number must trace to a
+   disk artifact (with sidecar SHA-256), and a guard script re-verifies the manuscript against
+   the ledger — including a *second hop* that rejects numbers whose only ledger appearances are
+   in retracted/voided contexts. The guard must fail closed (`--selftest` asserts it exits
+   non-zero on known-bad inputs).
+2. **Rigorous but not novel.** A teacher-side novelty gate (with live full-text literature
+   checks, not training memory) must approve any idea before it consumes GPU — and the gate is
+   *continuous*: every reframe / hypothesis change / mechanism swap re-enters it.
+
+## Contents
+
+| Path | What it is |
+|---|---|
+| `SKILL.md` | Bootstrap: role self-configuration workflow, file layout, collaboration loop |
+| `roles/teacher.md` | Teacher (mentor) duties: novelty gate, experiment design, integrity, writing |
+| `roles/student.md` | Student (executor) duties: run, measure, ledger discipline, SUBMIT-before-run |
+| `references/rules.md` | **Iron rules 0–15** — hard constraints for both agents (verify-before-analyze, line-by-line reference reading, one-change-one-verification, baseline-first, conservative reporting, 30-min literature check before novelty claims, falsifiable minimal experiments, citation-before-assertion, adversarial claim review, confirmation-bias discipline at confirming data, novelty gate on every claim mutation, run-identity verification, **fail-closed guards with self-failure tests**, **boundary-first debugging with entry conditions recorded in the artifact**) |
+| `templates/` | Scaffolding laid into a project: ledger, task queue, done log, review, ideas, check_numbers.py, COLLAB_PROTOCOL |
+| `COLLAB_PROTOCOL_evolved.md` | The collaboration protocol **as battle-tested in a real project** (one measurement-paper campaign, 58 adversarial review rounds), including: evidence-required bug-fix reporting (grep/run evidence, no verbal "done"), structural-before-parametric fixes, per-step asserts in multi-step edits |
+| `scripts/` | `init.sh` (role bootstrap, transport autodetect), `collab.sh` (herdr peer discovery), `notify.sh`, `start.sh` |
+
+## The collaboration loop
+
+```
+teacher: idea → novelty gate → NEXT_TASK.md ──(one-line notify)──▶ student
+student: read task → RUNNING → execute → numbers into ledger (with sha) → DONE_LOG
+teacher: adversarial review → REVIEW.md (PASS/REVISE/REJECT) ──(notify)──▶ student
+before delivery: python check_numbers.py   # 0 warnings, both hops
+```
+
+Long content always lives in files; the transport plane carries only "please read X.md".
+
+## Provenance
+
+Extracted from a live research project (same-board characterization of flow-matching speech
+enhancement on an embedded GPU). The iron rules and the evolved protocol encode every failure
+that was actually caught in that campaign — including several caught only by the *other* agent,
+which is the point.

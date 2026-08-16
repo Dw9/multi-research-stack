@@ -49,7 +49,11 @@ Long content always lives in files; the transport plane carries only "please rea
 
 ## Provenance
 
-Extracted from a live research project (same-board characterization of flow-matching speech
-enhancement on an embedded GPU). The iron rules and the evolved protocol encode every failure
-that was actually caught in that campaign — including several caught only by the *other* agent,
-which is the point.
+Extracted from a live GPU speech research project (measurement and characterization of a
+generative speech-enhancement model on embedded hardware). The stack was not designed upfront —
+it accreted around real failures: over ~60 adversarial review rounds between the teacher and a
+dedicated reviewer agent, the rules and guard mechanisms repeatedly caught errors before they
+reached the record — mixed measurement calibers, contaminated baselines, silently-failing
+validation scripts, over-attributed mechanisms, numbers whose retraction had not propagated.
+Nothing in the final submission traced to a tainted source. The iron rules below are the
+generalized form of those catches: each one exists because its absence once cost real work.
